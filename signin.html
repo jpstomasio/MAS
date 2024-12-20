@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CorSano</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link href="darkbutton.css" rel="stylesheet" />
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 70px; /* Adjust this value based on footer height */
+            background-image: url('Images/uni2.jpg'); /* Ensure this path is correct */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+
+        /* Register Container Styles (Right Side) */
+        .register-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            right: 0; /* Align container to the right */
+            bottom: 0;
+            width: 40%; /* Adjust width as needed */
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.95); /* White with slight transparency */
+            border-top-left-radius: 16px;
+            border-bottom-left-radius: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header Text */
+        .register-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+            .register-header h1 {
+                font-size: 2rem;
+                font-weight: bold;
+                color: #333;
+            }
+
+        /* Dark Mode Toggle */
+        #night_mode_toggle {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+            #night_mode_toggle .moon {
+                display: none;
+            }
+
+        .dark-mode #night_mode_toggle .sun {
+            display: none;
+        }
+
+        .dark-mode #night_mode_toggle .moon {
+            display: inline;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 0.75rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #d9534f; /* Red button */
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+            .btn-register:hover {
+                background-color: #c9302c; /* Darker red */
+            }
+
+        /* Footer */
+        .footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #ddd;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer-left, .footer-center, .footer-right {
+            display: flex;
+            align-items: center;
+        }
+
+            .footer-left a,
+            .footer-center a {
+                margin-right: 15px;
+                text-decoration: none;
+                color: #000;
+                font-weight: bold;
+            }
+
+            .footer-center a {
+                margin: 0 25px;
+            }
+
+                .footer-left a:hover,
+                .footer-center a:hover {
+                    color: #007bff;
+                }
+
+        /* Dark Mode Styles */
+        .dark-mode body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .register-container {
+            background-color: rgba(30, 30, 30, 0.9);
+            color: #e0e0e0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .dark-mode .form-label,
+        .dark-mode h1,
+        .dark-mode p {
+            color: #e0e0e0;
+        }
+
+        .dark-mode .form-control {
+            background-color: #333;
+            color: #e0e0e0;
+            border: 1px solid #555;
+        }
+
+        .dark-mode .btn-register {
+            background-color: #555;
+        }
+
+            .dark-mode .btn-register:hover {
+                background-color: #666;
+            }
+
+        .dark-mode .footer {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+            .dark-mode .footer a {
+                color: #bbb;
+            }
+
+                .dark-mode .footer a:hover {
+                    color: #fff;
+                }
+    </style>
+</head>
+<body onload="updateTheme()">
+    <!-- Register Container -->
+    <div class="register-container">
+        <div class="register-header">
+            <div>
+                <img src="Images/unilogo.png" alt="Logo" class="logo" style="max-width: 80px;">
+                <h1>REGISTER</h1>
+                <p>Welcome! Please enter your details.</p>
+            </div>
+            <label class="switch" id="night_mode_toggle">
+                <span class="sun" id="sun_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                        <g fill="#ffd43b">
+                            <circle r="5" cy="12" cx="12"></circle>
+                            <path d="M21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zM3 13H2a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1-.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1-.75.29zM6.64 18.36a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1-.7.24zM12 3a1 1 0 0 1-1-1V1a1 1 0 0 1 2 0v1a1 1 0 0 1-1 1zM12 21a1 1 0 0 1-1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1-1 1zM6.34 6.34a1 1 0 0 1-.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1-.71.29zM18.36 18.36a1 1 0 0 1-.7-.29l-.66-.71a1 1 0 0 1 1.36-1.36l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1-.71.24z"></path>
+                        </g>
+                    </svg>
+                </span>
+                <span class="moon" id="moon_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="20" height="20">
+                        <path d="M223.5 32C100 32 0 132.3 0 256s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+                    </svg>
+                </span>
+                <input type="checkbox" class="input" id="dark_mode_toggle" onchange="toggleDarkMode()">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <form>
+            <div class="form-group">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="surname" class="form-label">Surname</label>
+                <input type="text" id="surname" name="surname" class="form-control" placeholder="Enter your surname" required>
+            </div>
+            <div class="form-group">
+                <label for="number" class="form-label">Nº Mec.</label>
+                <input type="text" id="number" name="number" class="form-control" placeholder="Enter your mec. number" required>
+            </div>
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="********" required>
+            </div>
+            <button type="button" class="btn btn-register" onclick="redirectToLogin()">Create Account</button>
+            <div class="text-center mt-3">
+                <small>Already have an account? <a href="login.html" class="text-danger">Log in!</a></small>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- Footer -->
+    <div class="footer small">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                </div>
+                <div class="footer-center">
+                    <a href="#">Associe-se como RD</a>
+                    <a href="contactos.html">Contacte-nos</a>
+                </div>
+                <div class="footer-right">
+                    <p>Made by MASSolutions - MAS2024</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function redirectToLogin() {
+            const name = document.getElementById('name').value.trim();
+            const surname = document.getElementById('surname').value.trim();
+            const number = document.getElementById('number').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+    
+            // Validate required fields
+            if (!name || !surname || !number || !email || !password) {
+                alert('Please fill out all fields!');
+                return;
+            }
+    
+            // Check if the email already exists
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const emailExists = users.some(user => user.email === email);
+    
+            if (emailExists) {
+                alert('An account with this email already exists!');
+                return;
+            }
+    
+            // Save user to localStorage
+            users.push({ name, surname, number, email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+    
+            alert('Account created successfully!');
+            window.location.href = "login.html"; // Redirect to login page
+        }
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="darkmode.js"></script>
+</body>
+</html>

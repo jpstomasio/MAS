@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CorSano</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link href="darkbutton.css" rel="stylesheet" />
+
+    <!-- Google transalor -->
+    <link href="translate.css" rel="stylesheet" >
+ 
+
+    <style>
+        /* General Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling */
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .navbar-nav .nav-link {
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #dc3545;
+        }
+
+
+
+        /* Footer */
+        .footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #ddd;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .container, .contactos-section {
+                overflow: auto; /* Allow scroll within sections if content overflows */
+        }
+
+        .contactos-section {
+            padding: 4rem 0;
+            margin-top: 56px;
+        }
+
+        .contactos-title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .contactos-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contactos-image {
+            flex: 1;
+            margin-right: 2rem;
+        }
+
+        .contactos-image img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .contactos-info {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 2rem;
+        }
+
+        .contact-card {
+            background-color: #ffb06a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .contact-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .contact-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #ddd;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer-left, .footer-center, .footer-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-left a,
+        .footer-center a {
+            margin-right: 15px; /* Increased spacing for center elements */
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .footer-center a {
+            margin: 0 25px; /* Increased margin to add more space between the center links */
+        }
+
+        .footer-right p {
+            margin: 0;
+        }
+
+        .footer-left a:hover,
+        .footer-center a:hover {
+            color: #007bff; /* Add hover color for links */
+        }
+
+        .footer-left a:last-child, .footer-center a:last-child {
+            margin-right: 0; /* No margin on the last item */
+        }
+
+
+    </style>
+</head>
+<body onload="updateTheme()">
+    <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary border-bottom">
+        <div class="container-lg">
+            <a class="navbar-brand d-flex align-items-center" title="CorSano">
+                <img src="Images/logo.png" height="75" class="me-2" />
+                <span class="navbar-title">CorSano</span>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="homepage.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="atividades.html">Atividades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recursos.html">Recursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="metas.html">Metas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tacaUa.html">Taça UA</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <ul class="navbar-nav justify-content-end align-items-center" id="bd-theme">
+            <label class="switch ms-3" id="night_mode_toggle">
+                <span class="sun" id="sun_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                        <g fill="#ffd43b">
+                            <circle r="5" cy="12" cx="12"></circle>
+                            <path d="M21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zM3 13H2a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1-.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1-.75.29zM6.64 18.36a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1-.7.24zM12 3a1 1 0 0 1-1-1V1a1 1 0 0 1 2 0v1a1 1 0 0 1-1 1zM12 21a1 1 0 0 1-1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1-1 1zM6.34 6.34a1 1 0 0 1-.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1-.71.29zM18.36 18.36a1 1 0 0 1-.7-.29l-.66-.71a1 1 0 0 1 1.36-1.36l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1-.71.24z"></path>
+                        </g>
+                    </svg>
+                </span>
+                <span class="moon" id="moon_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="20" height="20">
+                        <path d="M223.5 32C100 32 0 132.3 0 256s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+                    </svg>
+                </span>
+                <input type="checkbox" class="input" id="dark_mode_toggle" onchange="toggleDarkMode()">
+                <span class="slider"></span>
+            </label>
+            <li class="nav-item d-flex align-items-center">
+                <a class="navbar-brand" href="welcome.html" title="UA">
+                    <img src="Images/unilogo.png" height="85" />
+                </a>
+
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Contactos -->
+    <section class="contactos-section">
+        <div class="container">
+          <h1 class="contactos-title">Contactos</h1>
+          <div class="contactos-content">
+            <div class="contactos-image">
+              <img src="Images/uni2.jpg" alt="University Campus">
+            </div>
+            <div class="contactos-info">
+              <div class="contact-card">
+                <h3 class="contact-title">Números</h3>
+                <ul class="contact-list">
+                  <li>Diretor: 968412034</li>
+                  <li>Atendimento Geral: 917232034</li>
+                  <li>Gerente: 967305494</li>
+                  <li>Atendimento Especial: 976054937</li>
+                  <li>Apoio: 914730589</li>
+                </ul>
+              </div>
+              <div class="contact-card">
+                <h3 class="contact-title">Emails</h3>
+                <ul class="contact-list">
+                  <li>Diretor: diretor@ua.pt</li>
+                  <li>Atendimento Geral: atendimentogeral@ua.pt</li>
+                  <li>Gerente: gerente@ua.pt</li>
+                  <li>Atendimento Especial: diretor@ua.pt</li>
+                  <li>Apoio: apoio@ua.pt</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <!-- Footer -->
+    <div class="footer small">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Left: Social Media Icons (Text-based) -->
+                <div class="footer-left">
+                    <a href="#" class="text-dark me-2"><i class="fa fa-instagram"></i></a>
+                    <a href="#" class="text-dark me-2"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="text-dark me-2"><i class="fa fa-linkedin"></i></a>
+                </div>
+    
+                <!-- Center: Links with increased spacing -->
+                <div class="footer-center">
+                    <a href="#">Associe-se como RD</a>
+                    <a href="contactos.html">Contacte-nos</a>
+                </div>
+    
+                <!-- Right: Footer Text -->
+                <div class="footer-right">
+                    <p>Made by MASSolutions - MAS2024</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="darkmode.js"></script>
+</body>
+</html>

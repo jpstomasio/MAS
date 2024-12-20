@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CorSano</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+
+    <link href="darkbutton.css" rel="stylesheet" />
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('Images/uni2.jpg'); /* Ensure this path is correct */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+
+        /* Login Container Styles */
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 40%; /* Adjust width as needed */
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.95); /* White with slight transparency */
+            border-top-right-radius: 16px;
+            border-bottom-right-radius: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header and Welcome Text */
+        .login-header {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-text {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 0.75rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #d9534f; /* Red like in your image */
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+            .btn-login:hover {
+                background-color: #c9302c; /* Darker red */
+            }
+
+        .footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #ddd;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer-left, .footer-center, .footer-right {
+            display: flex;
+            align-items: center;
+        }
+
+            .footer-left a,
+            .footer-center a {
+                margin-right: 15px; /* Increased spacing for center elements */
+                text-decoration: none;
+                color: #000;
+                font-weight: bold;
+            }
+
+            .footer-center a {
+                margin: 0 25px; /* Increased margin to add more space between the center links */
+            }
+
+            .footer-right p {
+                margin: 0;
+            }
+
+            .footer-left a:hover,
+            .footer-center a:hover {
+                color: #007bff; /* Add hover color for links */
+            }
+
+            .footer-left a:last-child, .footer-center a:last-child {
+                margin-right: 0; /* No margin on the last item */
+            }
+
+        .login-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .left-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .text-content {
+            margin-left: 15px;
+        }
+
+        #night_mode_toggle {
+            display: flex;
+            align-items: center;
+        }
+
+        /* General Dark Mode Styles */
+        .dark-mode {
+            background-color: #121212; /* Dark background for the body */
+            color: #e0e0e0; /* Light text for readability */
+        }
+
+            /* Dark Mode for Login Container */
+            .dark-mode .login-container {
+                background-color: rgba(30, 30, 30, 0.9); /* Dark background with slight transparency */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Stronger shadow for contrast */
+                color: #e0e0e0; /* Light text */
+            }
+
+            .dark-mode .login-header .welcome-text,
+            .dark-mode .form-label,
+            .dark-mode p,
+            .dark-mode a {
+                color: #e0e0e0; /* Light color for text elements */
+            }
+
+            .dark-mode .form-control {
+                background-color: #333; /* Dark input background */
+                color: #e0e0e0; /* Light input text */
+                border: 1px solid #555; /* Subtle border */
+            }
+
+                .dark-mode .form-control::placeholder {
+                    color: #aaa; /* Dim placeholder text */
+                }
+
+            .dark-mode .btn-login {
+                background-color: #444; /* Dark button */
+                color: #fff; /* White text */
+            }
+
+                .dark-mode .btn-login:hover {
+                    background-color: #666; /* Slightly lighter on hover */
+                }
+
+            /* Footer in Dark Mode */
+            .dark-mode .footer {
+                background-color: #1e1e1e; /* Dark background for footer */
+                color: #e0e0e0; /* Light footer text */
+            }
+
+                .dark-mode .footer a {
+                    color: #bbb; /* Lighter links */
+                }
+
+                    .dark-mode .footer a:hover {
+                        color: #fff; /* White on hover */
+                    }
+
+            .dark-mode .footer-right p {
+                color: #e0e0e0; /* Light text for footer note */
+            }
+
+            /* Dark Mode for Toggle Switch */
+            .dark-mode #night_mode_toggle .sun {
+                display: none; /* Hide sun in dark mode */
+            }
+
+            .dark-mode #night_mode_toggle .moon {
+                display: inline; /* Show moon in dark mode */
+            }
+
+        #night_mode_toggle .moon {
+            display: none; /* Hide moon in light mode */
+        }
+
+
+    </style>
+</head>
+<body onload="updateTheme()">
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="login-header d-flex align-items-center justify-content-between">
+            <div class="left-content d-flex align-items-center">
+                <img src="Images/unilogo.png" alt="Logo" class="logo" style="max-width: 100px;">
+                <div class="text-content ms-3">
+                    <h1 class="welcome-text">WELCOME BACK</h1>
+                    <p>Please enter your details!</p>
+                </div>
+            </div>
+            <label class="switch" id="night_mode_toggle">
+                <span class="sun" id="sun_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                        <g fill="#ffd43b">
+                            <circle r="5" cy="12" cx="12"></circle>
+                            <path d="M21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zM3 13H2a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1-.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1-.75.29zM6.64 18.36a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1-.7.24zM12 3a1 1 0 0 1-1-1V1a1 1 0 0 1 2 0v1a1 1 0 0 1-1 1zM12 21a1 1 0 0 1-1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1-1 1zM6.34 6.34a1 1 0 0 1-.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1-.71.29zM18.36 18.36a1 1 0 0 1-.7-.29l-.66-.71a1 1 0 0 1 1.36-1.36l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1-.71.24z"></path>
+                        </g>
+                    </svg>
+                </span>
+                <span class="moon" id="moon_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="20" height="20">
+                        <path d="M223.5 32C100 32 0 132.3 0 256s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+                    </svg>
+                </span>
+                <input type="checkbox" class="input" id="dark_mode_toggle" onchange="toggleDarkMode()">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <form class="login-form">
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" class="form-control" required>
+                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                        <span role="img" aria-label="eye">&#128065;</span>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-login">Log in</button>
+            <div class="d-flex justify-content-between mt-3">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="remember-me">
+                    <label class="form-check-label" for="remember-me">Remember me</label>
+                </div>
+                <a href="#" class="text-decoration-none text-primary" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Forgot password</a>
+            </div>          
+            <div class="text-center mt-3">
+                <small>Don't have an account? <a href="signin.html" class="text-danger">Sign up for free!</a></small>
+            </div>
+        </form>
+        
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">Forgot Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="forgotPasswordForm" novalidate>
+                        <div class="form-group mb-3">
+                            <label for="forgotEmail" class="form-label">Email Address</label>
+                            <input type="email" id="forgotEmail" class="form-control" placeholder="Enter your email" required>
+                            <div class="invalid-feedback">Please enter a valid email with an @ symbol.</div>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" id="sendForgotPassword">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer small">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Left: Social Media Icons (Text-based) -->
+                <div class="footer-left">
+                    <a href="#" class="text-dark me-2"><i class="fa fa-instagram"></i></a>
+                    <a href="#" class="text-dark me-2"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="text-dark me-2"><i class="fa fa-linkedin"></i></a>
+                </div>
+
+                <!-- Center: Links with increased spacing -->
+                <div class="footer-center">
+                    <a href="#">Associe-se como RD</a>
+                    <a href="contactos.html">Contacte-nos</a>
+                </div>
+
+                <!-- Right: Footer Text -->
+                <div class="footer-right">
+                    <p>Made by MASSolutions - MAS2024</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+
+    <script>
+        document.getElementById('sendForgotPassword').addEventListener('click', function () {
+        const emailInput = document.getElementById('forgotEmail');
+        const email = emailInput.value.trim();
+
+        // Email validation regex
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!email || !emailPattern.test(email)) {
+            emailInput.classList.add('is-invalid');
+        } else {
+            emailInput.classList.remove('is-invalid');
+            // Here you can send the email to the server or show a success message
+            alert('Password recovery instructions have been sent to your email.');
+            // Close the modal after submission
+            const modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
+            modal.hide();
+        }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const rememberMeCheckbox = document.getElementById('remember-me');
+
+        // Load saved credentials if they exist
+        const savedEmail = localStorage.getItem('email');
+        const savedPassword = localStorage.getItem('password');
+        const rememberMe = localStorage.getItem('rememberMe') === 'true';
+
+        if (rememberMe) {
+            emailInput.value = savedEmail || '';
+            passwordInput.value = savedPassword || '';
+            rememberMeCheckbox.checked = true;
+        }
+
+        // Handle form submission
+        document.querySelector('.login-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form submission for demonstration purposes
+            if (rememberMeCheckbox.checked) {
+                // Save email and password
+                localStorage.setItem('email', emailInput.value);
+                localStorage.setItem('password', passwordInput.value);
+                localStorage.setItem('rememberMe', true);
+            } else {
+                // Clear stored email and password
+                localStorage.removeItem('email');
+                localStorage.removeItem('password');
+                localStorage.setItem('rememberMe', false);
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const rememberMeCheckbox = document.getElementById('remember-me');
+
+    // Load saved credentials if they exist
+    const savedEmail = localStorage.getItem('email');
+    const savedPassword = localStorage.getItem('password');
+    const rememberMe = localStorage.getItem('rememberMe') === 'true';
+
+    if (rememberMe) {
+        emailInput.value = savedEmail || '';
+        passwordInput.value = savedPassword || '';
+        rememberMeCheckbox.checked = true;
+    }
+
+    document.querySelector('.login-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const emailInput = document.getElementById('email').value.trim();
+        const passwordInput = document.getElementById('password').value;
+
+        // Retrieve users from localStorage
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        // Check if the entered credentials match any stored user
+        const user = users.find(user => user.email === emailInput && user.password === passwordInput);
+
+        if (user) {
+            // Redirect to the appropriate page
+            if (emailInput === 'admin@ua.pt' && passwordInput === 'corsano123') {
+                window.location.href = 'homepageadmin.html';
+            } else {
+                alert(`Welcome back, ${user.name}!`);
+                window.location.href = 'homepage.html';
+            }
+        } else {
+            alert('Invalid email or password!');
+        }
+    });
+
+
+        document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password');
+        const passwordType = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', passwordType);
+
+        // Toggle the eye emoji based on the visibility state
+        const eyeEmoji = this.querySelector('span');
+    });
+    });
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="darkmode.js"></script>
+</body>
+</html>

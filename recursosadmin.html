@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CorSano</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+
+    <!-- Google transalor -->
+    <link href="translate.css" rel="stylesheet" >
+
+    <link href="darkbutton.css" rel="stylesheet" />
+
+    <style>
+        /* General Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .info-button {
+            background-color: #EA454C; /* Set the background color */
+            color: white; /* Set the text color */
+            border: none; /* Remove default border */
+            border-radius: 4px; /* Optional: Add border radius for rounded corners */
+            padding: 10px 20px; /* Adjust the padding to your liking */
+            font-size: 1rem; /* Font size for the button text */
+            cursor: pointer; /* Change the cursor to a pointer on hover */
+            transition: background-color 0.3s ease; /* Smooth transition effect */
+        }
+
+            .info-button:hover {
+                background-color: #D43F47; /* Darker shade of #EA454C for hover effect */
+            }
+
+
+        /* General Navbar Styling */
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .navbar-nav .nav-link {
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: #dc3545;
+            }
+
+
+
+        .footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #ddd;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer-left, .footer-center, .footer-right {
+            display: flex;
+            align-items: center;
+        }
+
+            .footer-left a,
+            .footer-center a {
+                margin-right: 15px; /* Increased spacing for center elements */
+                text-decoration: none;
+                color: #000;
+                font-weight: bold;
+            }
+
+            .footer-center a {
+                margin: 0 25px; /* Increased margin to add more space between the center links */
+            }
+
+            .footer-right p {
+                margin: 0;
+            }
+
+            .footer-left a:hover,
+            .footer-center a:hover {
+                color: #007bff; /* Add hover color for links */
+            }
+
+            .footer-left a:last-child, .footer-center a:last-child {
+                margin-right: 0; /* No margin on the last item */
+            }
+
+        .dark-mode .footer {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+            .dark-mode .footer a {
+                color: #bbb;
+            }
+
+                .dark-mode .footer a:hover {
+                    color: #fff;
+                }
+        #map {
+            height: 800px; /* Adjust the map height as needed */
+            width: 100%; /* Full width of the container */
+        }
+        .info-container {
+            display: none;
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            .info-container.active {
+                display: block; /* Show the container */
+            }
+
+            .info-container h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .info-container p {
+                font-size: 1.2rem;
+                color: #555;
+            }
+            .btn-edit {
+            background-color: #ffc107;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 0.5rem;
+        }
+
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+            .dark-mode .info-container {
+                background-color: #2e2e2e; 
+                
+                color: #e0e0e0; 
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);  
+            }
+
+        .dark-mode .info-container h2 {
+            color: #ffffff; 
+        }
+
+        .dark-mode .info-container p,
+        .dark-mode .info-container h6 {
+            color: #b0b0b0; 
+        }
+
+        .modal-content {
+            border-radius: 8px;
+        }
+
+        .dark-mode .modal-content {
+            background-color: #2e2e2e;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .modal-header {
+            border-bottom-color: #404040;
+        }
+
+        .dark-mode .modal-footer {
+            border-top-color: #404040;
+        }
+
+        .dark-mode .form-control {
+            background-color: #383838;
+            border-color: #404040;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .form-control:focus {
+            background-color: #404040;
+            color: #ffffff;
+        }
+
+        .dark-mode .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        .status-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #dc3545;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 0 4px 0 4px;
+        font-size: 0.8rem;
+        z-index: 1;
+    }
+
+    .dark-mode .status-badge {
+        background-color: #bd2130;
+    }
+
+    
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary border-bottom">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" title="CorSano">
+                <img src="Images/logo.png" height="75" class="me-2" />
+                <span class="navbar-title">CorSano</span>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="homepageadmin.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="atividadesadmin.html">Atividades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recursosadmin.html">Recursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="metasadmin.html">Metas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tacaUa_admin.html">Taça UA</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <ul class="navbar-nav justify-content-end align-items-center" id="bd-theme">
+            <label class="switch ms-3" id="night_mode_toggle">
+                <span class="sun" id="sun_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                        <g fill="#ffd43b">
+                            <circle r="5" cy="12" cx="12"></circle>
+                            <path d="M21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zM3 13H2a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1-.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1-.75.29zM6.64 18.36a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1-.7.24zM12 3a1 1 0 0 1-1-1V1a1 1 0 0 1 2 0v1a1 1 0 0 1-1 1zM12 21a1 1 0 0 1-1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1-1 1zM6.34 6.34a1 1 0 0 1-.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1-.71.29zM18.36 18.36a1 1 0 0 1-.7-.29l-.66-.71a1 1 0 0 1 1.36-1.36l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1-.71.24z"></path>
+                        </g>
+                    </svg>
+                </span>
+                <span class="moon" id="moon_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="20" height="20">
+                        <path d="M223.5 32C100 32 0 132.3 0 256s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+                    </svg>
+                </span>
+                <input type="checkbox" class="input" id="dark_mode_toggle" onchange="toggleDarkMode()">
+                <span class="slider"></span>
+            </label>
+            <li class="nav-item d-flex align-items-center">
+                <a class="navbar-brand" href="welcome.html" title="UA">
+                    <img src="Images/unilogo.png" height="85" />
+                </a>
+
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Recursos -->
+    <main class="container-lg" style="margin-top:150px;margin-bottom:50px">
+        <!-- Added margin-top to prevent overlap -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="col-md-12">
+                    <h3 class="mb-4">Map of Aveiro</h3>
+                    <div id="map"></div> <!-- Map container -->
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <h3 class="mb-4">Recursos da Universidade</h3>
+            
+                <div class="card resource-card" style="margin-bottom: 1rem;">
+                    <div class="row g-0">
+                        <div class="col-8">
+                            <div class="card-body py-2">
+                                <h5 class="card-title">Pavilhão Aristides Hall</h5>
+                                <p class="card-text">3810-489 Aveiro</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- Left side buttons -->
+                                    <div>
+                                        <button class="btn btn-find" id="findButton1">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn info-button" id="infoButton1" 
+                                                data-title="Pavilhão Aristides Hall" 
+                                                data-horario="9:00-01:00"
+                                                data-address="3810-489 Aveiro"
+                                                data-description="<p><strong>Pavilhão Aristides Hall</strong> é um dos edifícios mais icónicos da Universidade de Aveiro. É frequentemente utilizado para grandes eventos, conferências e exposições. Tem um interior espaçoso e instalações avançadas.</p><p>O edifício foi inaugurado em 1985 e, desde então, tem sido palco de numerosos eventos culturais, científicos e académicos. O Pavilhão é conhecido pelo seu design moderno, que inclui espaços abertos e layouts flexíveis, tornando-o adequado para uma ampla gama de atividades. Também é um espaço essencial para a vida estudantil da universidade, recebendo apresentações e encontros sociais.</p>">
+                                            Info
+                                        </button>
+                                    </div>
+                                    <!-- Right side buttons -->
+                                    <div>
+                                        <button class="btn btn-edit" id="editButton1">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i> Editar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <img src="Images/aristideshall.jpg" alt="Pavilhão Aristides Hall" 
+                                 class="img-fluid" style="height: auto; max-height: 100px; object-fit: cover;" />
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="card resource-card" style="margin-bottom: 1rem;">
+                    <div class="row g-0">
+                        <div class="col-8">
+                            <div class="card-body py-2">
+                                <h5 class="card-title">Sintético da Universidade de Aveiro</h5>
+                                <p class="card-text">3810-416 Aveiro</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- Left side buttons -->
+                                    <div>
+                                        <button class="btn btn-find" id="findButton2">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn info-button" id="infoButton2" 
+                                                data-title="Sintético da Universidade de Aveiro" 
+                                                data-horario="Segunda a Sexta das 9:00-21:00"
+                                                data-address="3810-416 Aveiro"
+                                                data-description="<p><strong>Sintético da Universidade de Aveiro</strong> é um campo de futebol com relvado sintético, ideal para treino e jogos. O espaço é frequentemente utilizado por estudantes e equipas locais para prática desportiva.</p><p>Inaugurado em 2000, o campo sintético tem sido um dos principais espaços para atividades desportivas da universidade. A infraestrutura é moderna e bem mantida, oferecendo um ambiente seguro e adequado para a prática de futebol e outros desportos coletivos.</p>">
+                                            Info
+                                        </button>
+                                    </div>
+                                    <!-- Right side buttons -->
+                                    <div>
+                                        <button class="btn btn-edit" id="editButton2">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i> Editar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <img src="Images/sinteticoua.jpg" alt="Sintético da Universidade de Aveiro" 
+                                 class="img-fluid" style="height: auto; max-height: 100px; object-fit: cover;" />
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="card resource-card" style="margin-bottom: 1rem;">
+                    <div class="row g-0">
+                        <div class="col-8">
+                            <div class="card-body py-2">
+                                <h5 class="card-title">Pista de Atletismo da Universidade de Aveiro</h5>
+                                <p class="card-text">3810-193 Aveiro</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- Left side buttons -->
+                                    <div>
+                                        <button class="btn btn-find" id="findButton3">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn info-button" id="infoButton3" 
+                                                data-title="Pista de Atletismo da Universidade de Aveiro" 
+                                                data-horario="Segunda a Sexta das 09:00-22:00"
+                                                data-address="3810-193 Aveiro"
+                                                data-description="<p><strong>Pista de Atletismo da Universidade de Aveiro</strong> é uma das melhores instalações desportivas para atletismo na região. É utilizada tanto por estudantes quanto por atletas locais para treinos e competições.</p><p>A pista foi renovada em 2010, oferecendo agora uma superfície de alta qualidade que atende aos padrões internacionais. A sua localização central torna-a facilmente acessível para todos os membros da comunidade académica e desportiva.</p>">
+                                            Info
+                                        </button>
+                                    </div>
+                                    <!-- Right side buttons -->
+                                    <div>
+                                        <button class="btn btn-edit" id="editButton3">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i> Editar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <img src="Images/pistaatletismoua.jpg" alt="Pista de Atletismo da Universidade de Aveiro" 
+                                 class="img-fluid" style="height: auto; max-height: 100px; object-fit: cover;" />
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="card resource-card" style="margin-bottom: 1rem;">
+                    <div class="row g-0">
+                        <div class="col-8">
+                            <div class="card-body py-2">
+                                <h5 class="card-title">Nave Multiusos Caixa UA</h5>
+                                <p class="card-text">3810-193 Aveiro</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- Left side buttons -->
+                                    <div>
+                                        <button class="btn btn-find" id="findButton4">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn info-button" id="infoButton4" 
+                                                data-title="Nave Multiusos Caixa UA" 
+                                                data-horario="Segunda a Sexta das 9:00-22:00"
+                                                data-address="3810-193 Aveiro"
+                                                data-description="<p><strong>Nave Multiusos Caixa UA</strong> é um espaço versátil, utilizado para eventos desportivos, culturais e académicos. A nave é um local de referência para as atividades extracurriculares da Universidade de Aveiro.</p><p>Com uma grande capacidade, a Nave Multiusos é ideal para eventos de grande escala, como concertos, exposições e competições. O espaço também é usado para eventos internos da universidade, como feiras de emprego e competições desportivas universitárias.</p>">
+                                            Info
+                                        </button>
+                                    </div>
+                                    <!-- Right side buttons -->
+                                    <div>
+                                        <button class="btn btn-edit" id="editButton4">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i> Editar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <img src="Images/nave_ua.jpg" alt="Nave Multiusos Caixa UA" 
+                                 class="img-fluid" style="height: auto; max-height: 100px; object-fit: cover;" />
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="card resource-card" style="margin-bottom: 1rem;">
+                    <div class="row g-0">
+                        <div class="col-8">
+                            <div class="card-body py-2">
+                                <h5 class="card-title">Sala de Treino Físico</h5>
+                                <p class="card-text">3810-193 Aveiro</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- Left side buttons -->
+                                    <div>
+                                        <button class="btn btn-find" id="findButton5">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn info-button" id="infoButton5" 
+                                                data-title="Sala de Treino Físico da Universidade de Aveiro" 
+                                                data-horario="Segunda a Sexta das 11:00-20:00"
+                                                data-address="3810-193 Aveiro"
+                                                data-description="<p><strong>Sala de Treino Físico da Universidade de Aveiro</strong> é uma moderna sala de ginásio, equipada com equipamentos de última geração para treino de força e cardio.</p><p>A sala é frequentada por estudantes e funcionários da universidade que buscam manter-se em forma. Está disponível para utilização durante o dia todo e oferece uma ampla variedade de atividades e programas de treino.</p>">
+                                            Info
+                                        </button>
+                                    </div>
+                                    <!-- Right side buttons -->
+                                    <div>
+                                        <button class="btn btn-edit" id="editButton5">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i> Editar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <img src="Images/gymua.jpg" alt="Sala de Treino Físico" 
+                                 class="img-fluid" style="height: auto; max-height: 100px; object-fit: cover;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-container" id="infoContainer">
+                <h2 id="infoTitle"></h2>
+                <p id="infoAddress"></p>
+                <h6 id="infoHorario"></h6>
+                <div id="infoDescription" class="large-text"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Add this modal HTML structure just before the closing </body> tag -->
+    <!-- Modal for editing schedule -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Editar Horário</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editForm">
+            <!-- Days selection -->
+            <div class="mb-4">
+              <label class="form-label">Dias da semana:</label>
+              <div class="d-flex flex-wrap gap-2">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="monday" name="weekdays">
+                  <label class="form-check-label" for="monday">Segunda</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="tuesday" name="weekdays">
+                  <label class="form-check-label" for="tuesday">Terça</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="wednesday" name="weekdays">
+                  <label class="form-check-label" for="wednesday">Quarta</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="thursday" name="weekdays">
+                  <label class="form-check-label" for="thursday">Quinta</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="friday" name="weekdays">
+                  <label class="form-check-label" for="friday">Sexta</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="saturday" name="weekdays">
+                  <label class="form-check-label" for="saturday">Sábado</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="sunday" name="weekdays">
+                  <label class="form-check-label" for="sunday">Domingo</label>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Time selection -->
+            <div class="mb-3">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="startTime" class="form-label">Hora de início:</label>
+                  <input type="time" class="form-control" id="startTime">
+                </div>
+                <div class="col-md-6">
+                  <label for="endTime" class="form-label">Hora de fim:</label>
+                  <input type="time" class="form-control" id="endTime">
+                </div>
+              </div>
+            </div>
+  
+            <!-- Break time selection -->
+            <div class="mb-3">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="breakStartTime" class="form-label">Início da pausa:</label>
+                  <input type="time" class="form-control" id="breakStartTime">
+                </div>
+                <div class="col-md-6">
+                  <label for="breakEndTime" class="form-label">Fim da pausa:</label>
+                  <input type="time" class="form-control" id="breakEndTime">
+                </div>
+              </div>
+            </div>
+  
+            <!-- Availability toggle -->
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="indisponivelCheck">
+              <label class="form-check-label" for="indisponivelCheck">Indisponível</label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="saveChanges">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script async
+            defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4SkIUV4qUoBWAZ5OFe74ws0uGfoc94TM&callback=initMap">
+    </script>
+    <script src="mapa.js"></script>
+    <script src="recursosadmin.js"></script>
+    <script src="darkmode.js"></script>
+</body>
+</html>
