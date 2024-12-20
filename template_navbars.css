@@ -1,0 +1,30 @@
+/* Existing CSS styles */
+.navbar{
+  /* Your existing navbar styles */
+}
+
+.navbar-brand img {
+  max-height: 100%;
+}
+
+.navbar-nav .nav-link {
+  padding: 0.5rem 1rem;
+}
+
+.navbar-nav .dropdown-menu {
+  border: none;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.navbar-nav .dropdown-item {
+  padding: 0.5rem 1.5rem;
+}
+
+.navbar-text {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.navbar-nav .nav-item.text-end {
+  text-align: right;
+}

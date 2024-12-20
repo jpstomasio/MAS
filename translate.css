@@ -1,0 +1,13 @@
+
+#google_translate_element select {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    color: #555;
+}
+#google_translate_element select:hover {
+    border-color: #dc3545; /* Adicionar um efeito hover */
+    color: #000;
+}
+
