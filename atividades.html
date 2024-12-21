@@ -1,0 +1,630 @@
+﻿<!DOCTYPE html>
+<html data-bs-theme="light" lang="pt">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+    <title>CorSano</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="darkbutton.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+            padding-top: 120px; /* Added padding to prevent content from being hidden */
+        }
+
+
+        .activity-card {
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+            .activity-card:hover {
+                transform: scale(1.02);
+            }
+
+        .activity-status {
+            font-weight: bold;
+        }
+
+            .activity-status.full {
+                color: red;
+            }
+
+            .activity-status.available {
+                color: green;
+            }
+
+            .activity-status.enrolled {
+                color: orange;
+            }
+
+        .pagination .page-item.active .page-link {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .navbar-nav .nav-link {
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: #dc3545;
+            }
+
+        .dark-mode .footer {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+            .dark-mode .footer a {
+                color: #bbb;
+            }
+
+                .dark-mode .footer a:hover {
+                    color: #fff;
+                }
+
+        /* General Dark Mode */
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #ddd;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 10px 0;
+            font-size: 14px;
+            z-index: 1000;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer-left, .footer-center, .footer-right {
+            display: flex;
+            align-items: center;
+        }
+
+            .footer-left a,
+            .footer-center a {
+                margin-right: 15px; /* Increased spacing for center elements */
+                text-decoration: none;
+                color: #000;
+                font-weight: bold;
+            }
+
+            .footer-center a {
+                margin: 0 25px; /* Increased margin to add more space between the center links */
+            }
+
+            .footer-right p {
+                margin: 0;
+            }
+
+            .footer-left a:hover,
+            .footer-center a:hover {
+                color: #007bff; /* Add hover color for links */
+            }
+
+            .footer-left a:last-child, .footer-center a:last-child {
+                margin-right: 0; /* No margin on the last item */
+            }
+
+            .activity {
+                display: none; /* Hide all activities by default */
+            }
+
+            .activity[data-page="1"] {
+                display: block; /* Show activities for page 1 */
+            }
+    </style>
+</head>
+<body onload="updateTheme()">
+    <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary border-bottom">
+        <div class="container-lg">
+            <a href="homepage.html" class="navbar-brand d-flex align-items-center" title="CorSano">
+                <img src="Images/logo.png" height="75" class="me-2" />
+                <span class="navbar-title">CorSano</span>
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="homepage.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="atividades2.html">Atividades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recursos.html">Recursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="metas.html">Metas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tacaUa.html">Taça UA</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <ul class="navbar-nav justify-content-end align-items-center" id="bd-theme">
+            <label class="switch ms-3" id="night_mode_toggle">
+                <span class="sun" id="sun_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                        <g fill="#ffd43b">
+                            <circle r="5" cy="12" cx="12"></circle>
+                            <path d="M21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zM3 13H2a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1-.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1-.75.29zM6.64 18.36a1 1 0 0 1-.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1-.7.24zM12 3a1 1 0 0 1-1-1V1a1 1 0 0 1 2 0v1a1 1 0 0 1-1 1zM12 21a1 1 0 0 1-1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1-1 1zM6.34 6.34a1 1 0 0 1-.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1-.71.29zM18.36 18.36a1 1 0 0 1-.7-.29l-.66-.71a1 1 0 0 1 1.36-1.36l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1-.71.24z"></path>
+                        </g>
+                    </svg>
+                </span>
+                <span class="moon" id="moon_icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="20" height="20">
+                        <path d="M223.5 32C100 32 0 132.3 0 256s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+                    </svg>
+                </span>
+                <input type="checkbox" class="input" id="dark_mode_toggle" onchange="toggleDarkMode()">
+                <span class="slider"></span>
+            </label>
+            <li class="nav-item d-flex align-items-center">
+                <a class="navbar-brand" href="welcome.html" title="UA">
+                    <img src="Images/unilogo.png" height="85" />
+                </a>
+
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container" id="workingArea">
+
+        <div class="mb-4">
+            <div class="btn-group" role="group" aria-label="Activity Filters">
+                <button type="button" class="btn btn-primary" id="filterThisWeek">Esta Semana</button>
+                <button type="button" class="btn btn-outline-primary" id="filterEnrolled">Inscrito</button>
+                <button type="button" class="btn btn-outline-primary" id="filterNotEnrolled">Não Inscrito</button>
+                <button type="button" class="btn btn-outline-primary" id="filterOutdoor">Ao ar Livre</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+    <div class="row" id="activitiesContainer">
+        <!-- Existing Activity 1 -->
+        <div class="col-md-4 activity" data-page="1">
+            <div class="activity-card" id="spinning-class" data-category="indoor">
+                <div class="card">
+                    <img src="./Images/spinning.png" class="card-img-top" alt="Aula de Spinning" style="height:400px">
+                    <div class="card-body">
+                        <h5 class="card-title">Aula de Spinning</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Treinadora Ana</h6>
+                        <p class="card-text">
+                            Segunda-feira às 18:00 no Pavilhão Aristides Hall<br>
+                            Pedale no ritmo da música e melhore sua resistência cardiovascular.
+                        </p>
+                        <div class="activity-status available mb-3">Vagas disponíveis: 30</div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-info btn-sm" onclick="showMoreInfo('spinning-class')">Mais Informações</button>
+                            <button class="btn btn-success btn-sm enroll" onclick="toggleEnrollment('spinning-class')">Inscrever-se</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Existing Activity 2 -->
+        <div class="col-md-4 activity" data-page="1">
+            <div class="activity-card" id="squash-class" data-category="indoor">
+                <div class="card">
+                    <img src="./Images/squash.png" class="card-img-top" alt="Aula de Squash" style="height:400px">
+                    <div class="card-body">
+                        <h5 class="card-title">Aula de Squash</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Treinador Rui</h6>
+                        <p class="card-text">
+                            Terça-feira às 16:00 no Campo de Squash<br>
+                            Melhore sua agilidade, velocidade e coordenação nesta dinâmica modalidade.
+                        </p>
+                        <div class="activity-status available mb-3">Vagas disponíveis: 16</div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-info btn-sm" onclick="showMoreInfo('squash-class')">Mais Informações</button>
+                            <button class="btn btn-success btn-sm enroll" onclick="toggleEnrollment('squash-class')">Inscrever-se</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Existing Activity 3 -->
+        <div class="col-md-4 activity" data-page="1">
+            <div class="activity-card" id="pilates-class" data-category="indoor">
+                <div class="card">
+                    <img src="./Images/pilates.png" class="card-img-top" alt="Aula de Pilates" style="height:425px">
+                    <div class="card-body">
+                        <h5 class="card-title">Aula de Pilates</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Treinador Luís</h6>
+                        <p class="card-text">
+                            Quarta-feira às 10:00 na Sala de Treinos 1<br>
+                            Fortaleça o core, melhore a postura e a flexibilidade.
+                        </p>
+                        <div class="activity-status available mb-3">Vagas disponíveis: 25</div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-info btn-sm" onclick="showMoreInfo('pilates-class')">Mais Informações</button>
+                            <button class="btn btn-success btn-sm enroll" onclick="toggleEnrollment('pilates-class')">Inscrever-se</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- New Activity 1: Yoga (data-page="2") -->
+        <div class="col-md-4 activity" data-page="2">
+            <div class="activity-card" id="yoga-class" data-category="indoor">
+                <div class="card">
+                    <img src="https://storage.googleapis.com/a1aa/image/47AzNeKt7u09cS3WQO8fSlKAjT2As6oLcopgN4wrILgstk7TA.jpg" class="card-img-top" alt="Aula de Ioga">
+                    <div class="card-body">
+                        <h5 class="card-title">Aula de Ioga</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Treinadora Isabel</h6>
+                        <p class="card-text">
+                            Segunda-feira às 17:00 no Pavilhão Aristides Hall<br>
+                            Explore posturas simples e técnicas de relaxamento.
+                        </p>
+                        <div class="activity-status available mb-3">Vagas disponíveis: 15</div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-info btn-sm" onclick="showMoreInfo('yoga-class')">Mais Informações</button>
+                            <button class="btn btn-success btn-sm enroll" onclick="toggleEnrollment('yoga-class')">Inscrever-se</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Activity 2: Zumba (data-page="2") -->
+        <div class="col-md-4 activity" data-page="2">
+            <div class="activity-card" id="zumba-class" data-category="indoor">
+                <div class="card">
+                    <img src="https://storage.googleapis.com/a1aa/image/XbGLdUv3zTJcFlLOTXiGcqGIjPPBeU18fyOfJtNoZ6hRbJ3nA.jpg" class="card-img-top" alt="Aula de Zumba">
+                    <div class="card-body">
+                        <h5 class="card-title">Aula de Zumba</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Treinador Marcelino</h6>
+                        <p class="card-text">
+                            Terça-feira às 17:00 no Pavilhão Aristides Hall<br>
+                            Dance e divirta-se com passos simples e animados.
+                        </p>
+                        <div class="activity-status available mb-3">Vagas disponíveis: 10</div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-info btn-sm" onclick="showMoreInfo('zumba-class')">Mais Informações</button>
+                            <button class="btn btn-success btn-sm enroll" onclick="toggleEnrollment('zumba-class')">Inscrever-se</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Activity 3: Group Walk (data-page="2") -->
+        <div class="col-md-4 activity" data-page="2">
+            <div class="activity-card" id="group-walk" data-category="outdoor">
+                <div class="card">
+                    <img src="https://storage.googleapis.com/a1aa/image/3Ka8AXRAw1rrPt1LwBrhO8d24EKfdRMrAPA5F3PftyPqtk7TA.jpg" class="card-img-top" alt="Caminhada em Grupo">
+                    <div class="card-body">
+                        <h5 class="card-title">Caminhada em Grupo</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Treinador Carlos</h6>
+                        <p class="card-text">
+                            Quarta-feira às 14:30 na Pista de Atletismo<br>
+                            Atividade tranquila para relaxar e socializar em grupo.
+                        </p>
+                        <div class="activity-status available mb-3">Vagas disponíveis: 20</div>
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-info btn-sm" onclick="showMoreInfo('group-walk')">Mais Informações</button>
+                            <button class="btn btn-success btn-sm enroll" onclick="toggleEnrollment('group-walk')">Inscrever-se</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+<nav aria-label="Activities pagination" class="mt-4" style="margin-bottom: 80px;">
+    <ul class="pagination justify-content-center" id="paginationContainer">
+        <li class="page-item" data-page="1"><a class="page-link" href="#">1</a></li>
+        <li class="page-item" data-page="2"><a class="page-link" href="#">2</a></li>
+        <!-- Add more pages if you have more activities -->
+    </ul>
+</nav>
+
+    <!-- More Information Modal -->
+    <!-- More Information Modal -->
+    <div class="modal fade" id="activityModal" tabindex="-1" aria-labelledby="activityModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="activityModalLabel">Detalhes da Atividade</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="activityModalBody">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer small">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Left: Social Media Icons (Text-based) -->
+                <div class="footer-left">
+                    <a href="#" class="text-dark me-2"><i class="fa fa-instagram"></i></a>
+                    <a href="#" class="text-dark me-2"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="text-dark me-2"><i class="fa fa-linkedin"></i></a>
+                </div>
+
+                <!-- Center: Links with increased spacing -->
+                <div class="footer-center">
+                    <a href="#">Associe-se como RD</a>
+                    <a href="contactos.html">Contacte-nos</a>
+                </div>
+
+                <!-- Right: Footer Text -->
+                <div class="footer-right">
+                    <p>Made by MASSolutions - MAS2024</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="shared-activities.js"></script>
+
+    <!-- Unified Activities Script -->
+    <script src="activities-script.js"></script>
+    <script src="darkmode.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const ITEMS_PER_PAGE = 3;
+    const activitiesContainer = document.getElementById('workingArea');
+    const paginationContainer = document.getElementById('paginationContainer');
+    
+    // Get all activity cards
+    let allActivities = document.querySelectorAll('.activity-card');
+    let currentFilter = 'thisWeek';
+    
+    // Function to update pagination based on visible activities
+    function updatePagination(visibleActivities) {
+        const pageCount = Math.ceil(visibleActivities.length / ITEMS_PER_PAGE);
+        
+        // Clear existing pagination
+        paginationContainer.innerHTML = '';
+        
+        // Only create pagination if there's more than one page
+        if (pageCount > 1) {
+            for (let i = 1; i <= pageCount; i++) {
+                const li = document.createElement('li');
+                li.className = 'page-item' + (i === 1 ? ' active' : '');
+                li.setAttribute('data-page', i);
+                
+                const a = document.createElement('a');
+                a.className = 'page-link';
+                a.href = '#';
+                a.textContent = i;
+                
+                li.appendChild(a);
+                paginationContainer.appendChild(li);
+            }
+        }
+    }
+    
+    // Function to clear no activities message
+    function clearNoActivitiesMessage() {
+        const messages = activitiesContainer.querySelectorAll('.text-center');
+        messages.forEach(msg => msg.remove());
+    }
+    
+    // Function to display activities for current page
+    function displayActivities(activities, page = 1) {
+        const start = (page - 1) * ITEMS_PER_PAGE;
+        const end = start + ITEMS_PER_PAGE;
+        
+        // Clear any existing "no activities" message first
+        clearNoActivitiesMessage();
+        
+        // Hide all activities first
+        allActivities.forEach(activity => {
+            activity.closest('.col-md-4').style.display = 'none';
+        });
+        
+        // Show only activities for current page
+        activities.slice(start, end).forEach((activity, index) => {
+            const activityCol = activity.closest('.col-md-4');
+            activityCol.style.display = 'block';
+            activityCol.style.order = index;
+        });
+        
+        // If no activities to show, display a message
+        if (activities.length === 0) {
+            const noActivitiesMsg = document.createElement('div');
+            noActivitiesMsg.className = 'col-12 text-center mt-4';
+            noActivitiesMsg.innerHTML = '<p>Nenhuma atividade encontrada para este filtro.</p>';
+            activitiesContainer.appendChild(noActivitiesMsg);
+        }
+    }
+    
+    // Filter activities
+    function filterActivities(filter) {
+        currentFilter = filter;
+        
+        // Get fresh set of activities to account for any enrollment changes
+        allActivities = document.querySelectorAll('.activity-card');
+        let visibleActivities = [];
+        
+        // Clear any existing "no activities" message before filtering
+        clearNoActivitiesMessage();
+        
+        switch(filter) {
+            case 'thisWeek':
+                visibleActivities = Array.from(allActivities);
+                break;
+            case 'enrolled':
+                visibleActivities = Array.from(allActivities).filter(activity => 
+                    activity.querySelector('.enroll').textContent === 'Anular Inscrição'
+                );
+                break;
+            case 'notEnrolled':
+                visibleActivities = Array.from(allActivities).filter(activity => 
+                    activity.querySelector('.enroll').textContent === 'Inscrever-se'
+                );
+                break;
+            case 'outdoor':
+                visibleActivities = Array.from(allActivities).filter(activity => 
+                    activity.getAttribute('data-category') === 'outdoor'
+                );
+                break;
+        }
+        
+        updatePagination(visibleActivities);
+        displayActivities(visibleActivities, 1);
+        
+        return visibleActivities;
+    }
+
+    // Add event listener for enrollment changes
+    activitiesContainer.addEventListener('click', function(e) {
+        if (e.target.classList.contains('enroll')) {
+            // After enrollment status changes, reapply current filter
+            setTimeout(() => filterActivities(currentFilter), 0);
+        }
+    });
+    
+    window.toggleEnrollment = function(activityId) {
+    const activityCard = document.getElementById(activityId);
+    const enrollButton = activityCard.querySelector('.enroll');
+    const statusDiv = activityCard.querySelector('.activity-status');
+    const wasEnrolled = enrollButton.textContent === 'Anular Inscrição';
+    
+    // Toggle enrollment status
+    enrollButton.textContent = wasEnrolled ? 'Inscrever-se' : 'Anular Inscrição';
+    enrollButton.classList.toggle('btn-success');
+    enrollButton.classList.toggle('btn-danger');
+    
+    // Update available slots
+    const currentSlots = parseInt(statusDiv.textContent.match(/\d+/)[0]);
+    const newSlots = wasEnrolled ? currentSlots + 1 : currentSlots - 1;
+    statusDiv.textContent = `Vagas disponíveis: ${newSlots}`;
+    
+    // Update status color based on availability
+    if (newSlots === 0) {
+        statusDiv.classList.remove('available');
+        statusDiv.classList.add('full');
+        enrollButton.disabled = true;
+    } else {
+        statusDiv.classList.remove('full');
+        statusDiv.classList.add('available');
+        enrollButton.disabled = false;
+    }
+    
+    // If we're currently filtering by enrollment status, update the view
+    if ((currentFilter === 'enrolled' && wasEnrolled) || 
+        (currentFilter === 'notEnrolled' && !wasEnrolled)) {
+        // Get current page before refiltering
+        const currentPage = document.querySelector('.page-item.active')?.getAttribute('data-page') || 1;
+        
+        // Reapply current filter
+        const visibleActivities = filterActivities(currentFilter);
+        
+        // If there are still activities on the current page, show that page
+        if (visibleActivities.length > ((currentPage - 1) * ITEMS_PER_PAGE)) {
+            displayActivities(visibleActivities, currentPage);
+        } else {
+            // Otherwise, show the last available page
+            const lastPage = Math.ceil(visibleActivities.length / ITEMS_PER_PAGE) || 1;
+            displayActivities(visibleActivities, lastPage);
+        }
+    }
+};
+    
+    // Event listeners for filter buttons
+    document.getElementById('filterThisWeek').addEventListener('click', function() {
+        document.querySelectorAll('.btn-group .btn').forEach(btn => btn.classList.remove('btn-primary', 'active'));
+        this.classList.add('btn-primary', 'active');
+        filterActivities('thisWeek');
+    });
+    
+    document.getElementById('filterEnrolled').addEventListener('click', function() {
+        document.querySelectorAll('.btn-group .btn').forEach(btn => btn.classList.remove('btn-primary', 'active'));
+        this.classList.add('btn-primary', 'active');
+        filterActivities('enrolled');
+    });
+    
+    document.getElementById('filterNotEnrolled').addEventListener('click', function() {
+        document.querySelectorAll('.btn-group .btn').forEach(btn => btn.classList.remove('btn-primary', 'active'));
+        this.classList.add('btn-primary', 'active');
+        filterActivities('notEnrolled');
+    });
+    
+    document.getElementById('filterOutdoor').addEventListener('click', function() {
+        document.querySelectorAll('.btn-group .btn').forEach(btn => btn.classList.remove('btn-primary', 'active'));
+        this.classList.add('btn-primary', 'active');
+        filterActivities('outdoor');
+    });
+    
+    // Pagination click handler
+    paginationContainer.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (e.target.classList.contains('page-link')) {
+            const page = parseInt(e.target.closest('.page-item').getAttribute('data-page'));
+            const visibleActivities = filterActivities(currentFilter);
+            
+            // Update active state
+            document.querySelectorAll('.page-item').forEach(item => item.classList.remove('active'));
+            e.target.closest('.page-item').classList.add('active');
+            
+            displayActivities(visibleActivities, page);
+        }
+    });
+    
+    // Initial setup
+    document.getElementById('filterThisWeek').classList.add('btn-primary', 'active');
+    filterActivities('thisWeek');
+});
+
+    </script>
+</body>
+</html>
